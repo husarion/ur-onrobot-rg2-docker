@@ -1,7 +1,7 @@
 services:
 
   rg2-driver:
-    image: husarion/onrobot-rg2:noetic
+    image: husarion/ur-onrobot-rg2:noetic
     container_name: rg2-onrobot-driver
     restart: on-failure
     network_mode: host
