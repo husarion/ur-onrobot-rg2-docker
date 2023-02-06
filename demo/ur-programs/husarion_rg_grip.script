@@ -1,0 +1,13 @@
+while( not (socket_open("10.15.20.3", 2138, "gripper_cmd_socket"))):
+    sleep(1.0)    
+end
+
+while(True):
+    grip_cmd = socket_read_ascii_float(2, "gripper_cmd_socket", timeout=0)
+    popup(grip_cmd)
+    rg_grip(grip_cmd[1], grip_cmd[2], tool_index = 0, blocking = True, depth_comp = False, popupmsg = True)
+    sleep(0.1)
+    socket_send_line("Succes", socket_name="gripper_cmd_socket")
+end
+
+socket_close("gripper_cmd_socket")   
