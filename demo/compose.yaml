@@ -1,6 +1,6 @@
 services:
 
-  ur-driver:
+  rg2-driver:
     image: husarion/onrobot-rg2:noetic
     container_name: rg2-onrobot-driver
     restart: on-failure
@@ -11,4 +11,4 @@ services:
       - ROS_IP=10.15.20.3
       - ROS_MASTER_URI=http://10.15.20.2:11311
     command: >
-      rosrun onrobot_rg2_driver bringup.launch
+      roslaunch onrobot_rg2_driver bringup.launch
