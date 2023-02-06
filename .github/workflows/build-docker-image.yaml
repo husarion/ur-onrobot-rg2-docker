@@ -37,4 +37,4 @@ jobs:
           file: ./Dockerfile
           platforms: linux/arm64, linux/amd64
           push: true
-          tags: husarion/onrobot-rg2:noetic
+          tags: husarion/ur-onrobot-rg2:noetic
