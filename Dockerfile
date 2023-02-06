@@ -12,7 +12,7 @@ RUN apt-get update && \
     pip3 install \
         rosdep \
         vcstool && \
-    git clone https://github.com/husarion/ur_onrobot_rg2_ros.git src/ur_onrobot_rg2_ros && \
+    git clone https://github.com/husarion/ur_onrobot_rg2_ros.git src && \
     vcs import src < src/onrobot_rg2/onrobot_rg2.repos && \
     rosdep init && \
     rosdep update --rosdistro=$ROS_DISTRO && \
