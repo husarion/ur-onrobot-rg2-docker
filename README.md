@@ -33,7 +33,7 @@ Continue by following the instructions in [ur-docker](https://github.com/husario
 >
 > Please note that this is only temporary solution ([issue](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/issues/611)).
 
-To control the RG2 gripper, you need to call `rg2/set_gripper_width` service (`GripperState` custom type) with a float range from 0.0 to 1.0. The value of 0.0 corresponds to a closed gripper, while the value of 1.0 corresponds to a fully open gripper with a range of 100mm. In order to control the position of the gripper, you can adjust the value within this range.
+To control the RG2 gripper, you need to call `rg2/set_gripper_width` service (`onrobot_rg2_driver/GripperState` custom type) with a float range from 0.0 to 1.0. The value of 0.0 corresponds to a closed gripper, while the value of 1.0 corresponds to a fully open gripper with a range of 100mm. In order to control the position of the gripper, you can adjust the value within this range.
 
 ## Simulation
 
