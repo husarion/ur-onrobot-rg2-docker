@@ -1,35 +1,34 @@
 def husarion_ext_control():
   global _hidden_verificationVariable=0
-  step_count_58d0adee_34e2_4ccd_9f28_c9cd9a54195c = 0.0
-  thread Step_Counter_Thread_784535aa_bf42_47ec_85f1_a60eca195a16():
-    while (True):
-      step_count_58d0adee_34e2_4ccd_9f28_c9cd9a54195c = step_count_58d0adee_34e2_4ccd_9f28_c9cd9a54195c + 1.0
-      sync()
-    end
-  end
-  run Step_Counter_Thread_784535aa_bf42_47ec_85f1_a60eca195a16()
-  set_target_payload(0.950000, [0.003000, -0.003000, 0.061000], [0.001413, 0.001413, 0.001413, 0.000000, 0.000000, 0.000000])
+  set_tcp(p[0.001996317595879933,-0.03805892914801173,0.2137942292011179,0.0,-0.20943951023931953,0.0])
+  set_safety_mode_transition_hardness(1)
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 1)
+  set_analog_outputdomain(1, 1)
+  set_input_actions_to_default()
   set_tool_communication(True, 1000000, 2, 1, 1.5, 3.5)
   set_tool_output_mode(0)
   set_tool_digital_output_mode(0, 1)
   set_tool_digital_output_mode(1, 1)
   set_tool_voltage(24)
-  set_standard_analog_input_domain(0, 1)
-  set_standard_analog_input_domain(1, 1)
-  set_tool_analog_input_domain(0, 1)
-  set_tool_analog_input_domain(1, 1)
-  set_analog_outputdomain(0, 0)
-  set_analog_outputdomain(1, 0)
-  set_input_actions_to_default()
-  set_safety_mode_transition_hardness(1)
-  set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+  set_target_payload(1.130000, [0.000000, -0.024000, 0.029000], [0.001887, 0.001887, 0.001887, 0.000000, 0.000000, 0.000000])
   set_gravity([0.0, 0.0, 9.82])
+  global counter_global=193
+  global var_global=0
   # begin: URCap Installation Node
   #   Source: External Control, 1.0.5, FZI Research Center for Information Technology
   #   Type: External Control
   # end: URCap Installation Node
   # begin: URCap Installation Node
-  #   Source: OnRobot, 5.18.0, OnRobot A/S
+  #   Source: myUR URCap, 1.8.1.SNAPSHOT, Universal Robots
+  #   Type: myUR
+  myurRPC = rpc_factory("xmlrpc","http://127.0.0.1:40474")
+  # end: URCap Installation Node
+  # begin: URCap Installation Node
+  #   Source: OnRobot, 5.17.1, OnRobot A/S
   #   Type: OnRobot Setup
   if (False):
     global rg_Busy = 0
@@ -59,7 +58,7 @@ def husarion_ext_control():
   ON_DI_PRIMARY = 1
   ON_DI_SECONDARY = 2
   ON_DI_DUAL = 3
-  on_robot_type = 5
+  on_robot_type = 3
   on_robot_cycle = 2.0
   on_conn_ip = "localhost"
   on_tool_ip = "localhost"
@@ -103,7 +102,7 @@ def husarion_ext_control():
   on_dataProcess_thrd=0
   ON_DEVICE_ID_MISSING=0
   ON_INIT_WATCHDOG_HZ=5
-  ON_INIT_TIMEOUT=2000
+  ON_INIT_TIMEOUT=500
   on_robot_TCP_offset=ON_ZEROFRAME
   on_tcp_offset_actual=ON_ZEROFRAME
   on_cog_actual=ON_ZEROFRAME
@@ -1198,8 +1197,8 @@ def husarion_ext_control():
   
   #======    End of OnRobot RG Engine    ======#
   rg_mounting_angle_arr[0] = 0.0
-  rg_fingertip_arr[0] = 4.599999904632568
-  rg_Depth_arr[0] = 34.5
+  rg_fingertip_arr[0] = 5.0
+  rg_Depth_arr[0] = 0.0
   textmsg(on_devices_primary_log, ": Quick Changer + RG2 + [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]")
   on_follow_tcp = True
   on_tcp_active_is_primary = True
@@ -1471,361 +1470,70 @@ def husarion_ext_control():
   
   #======    End of OnRobot RG Run    ======#
   # end: URCap Installation Node
-  $ 3 "Thread_1"
-  thread Thread_1():
+  step_count_b8185ade_1905_4a1b_be5c_14fd00ab9fec = 0.0
+  thread Step_Counter_Thread_21e2ea0f_4b7f_4560_b1ee_feaf412a9a5e():
     while (True):
-      $ 4 "Wait: 0.2"
-      sleep(0.2)
-      $ 5 "Set AO[1]=get_rg_Width()/101.5"
-      set_standard_analog_out(1,  get_rg_Width ()/101.5)
+      step_count_b8185ade_1905_4a1b_be5c_14fd00ab9fec = step_count_b8185ade_1905_4a1b_be5c_14fd00ab9fec + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_21e2ea0f_4b7f_4560_b1ee_feaf412a9a5e()
+  $ 4 "Thread_1"
+  thread Thread_1():
+    $ 5 "Script: husarion_rg2_driver.script"
+    modbus_add_signal("10.15.20.4", 255, 16, 3, "joint_out")
+    modbus_add_signal("10.15.20.4", 255, 17, 1, "rg_busy_out")
+    modbus_add_signal("10.15.20.4", 255, 18, 1, "grip_detected_out")
+    
+    modbus_add_signal("10.15.20.4", 255, 20, 0, "action_trigger_in")
+    modbus_add_signal("10.15.20.4", 255, 128, 2, "joint_in")
+    modbus_add_signal("10.15.20.4", 255, 129, 2, "force_in")
+    
+    modbus_set_signal_update_frequency("joint_out", 500)
+    modbus_set_signal_update_frequency("rg_busy_out", 500)
+    modbus_set_signal_update_frequency("grip_detected_out", 500)
+    modbus_set_signal_update_frequency("action_trigger_in", 500)
+    modbus_set_signal_update_frequency("joint_in", 500)
+    modbus_set_signal_update_frequency("force_in", 500)
+    
+    while(True):
+        if modbus_get_signal_status("action_trigger_in", False):
+            joint_req = modbus_get_signal_status("joint_in", False) / 10
+            force_req = modbus_get_signal_status("force_in", False) / 10
+            rg_grip(joint_req, force_req, 0, False, False)
+        end
+    
+        width = norm(floor(rg_Width * 10))
+        modbus_set_output_register("joint_out", width, False)
+        modbus_set_output_signal("rg_busy_out", rg_Busy, False)
+        modbus_set_output_signal("grip_detected_out", rg_Grip_detected, False)
+    
+        sleep(0.05)
     end
   end
   threadId_Thread_1 = run Thread_1()
   $ 6 "Thread_2"
   thread Thread_2():
-    while (True):
-      $ 7 "Wait digital_out[0]≟ True "
-      while (not(get_standard_digital_out(0) ==   True  )):
-        sync()
-      end
-      $ 8 "rg_grip((get_standard_analog_out(0)-0.0035)*6060, 40, tool_index = 0, blocking = True, depth_comp = False, popupmsg = True)"
-      rg_grip((get_standard_analog_out(0)-0.0035)*6060, 40, tool_index = 0, blocking = True, depth_comp = False, popupmsg = True)
-      $ 9 "Set DO[0]=Off"
-      set_standard_digital_out(0, False)
+    $ 7 "Script: husarion_rg2_watchdog.script"
+    modbus_add_signal("10.15.20.4", 255, 19, 1, "watchdog_out")
+    modbus_set_signal_update_frequency("joint_out", 500)
+    
+    state = False
+    
+    while(True):
+        modbus_set_output_signal("watchdog_out", state, False)
+        state = not state
+        sleep(0.1)
     end
   end
   threadId_Thread_2 = run Thread_2()
   while (True):
-    $ 1 "Robot Program"
+    $ 2 "Robot Program"
     # begin: URCap Program Node
     #   Source: External Control, 1.0.5, FZI Research Center for Information Technology
     #   Type: External Control
-    $ 2 "Control by 10.15.20.3"
- # HEADER_BEGIN
- 
- 
- 
- steptime = get_steptime()
- 
- textmsg("ExternalControl: steptime=", steptime)
- MULT_jointstate = 1000000
- MULT_time = 1000
- 
- #Constants
- SERVO_UNINITIALIZED = -1
- SERVO_IDLE = 0
- SERVO_RUNNING = 1
- 
- MODE_STOPPED = -2
- MODE_UNINITIALIZED = -1
- MODE_IDLE = 0
- MODE_SERVOJ = 1
- MODE_SPEEDJ = 2
- MODE_FORWARD = 3
- MODE_SPEEDL = 4
- MODE_POSE = 5
- 
- TRAJECTORY_MODE_RECEIVE = 1
- TRAJECTORY_MODE_CANCEL = -1
- 
- TRAJECTORY_POINT_JOINT = 0
- TRAJECTORY_POINT_CARTESIAN = 1
- TRAJECTORY_DATA_DIMENSION = 7
- 
- TRAJECTORY_RESULT_SUCCESS = 0
- TRAJECTORY_RESULT_CANCELED = 1
- TRAJECTORY_RESULT_FAILURE = 2
- 
- ZERO_FTSENSOR = 0
- SET_PAYLOAD = 1
- SET_TOOL_VOLTAGE = 2
- SCRIPT_COMMAND_DATA_DIMENSION = 5
- 
- #Global variables are also showed in the Teach pendants variable list
- global cmd_servo_state = SERVO_UNINITIALIZED
- global cmd_servo_qd = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
- global cmd_servo_q = get_actual_joint_positions()
- global cmd_servo_q_last = get_actual_joint_positions()
- global cmd_twist = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
- global extrapolate_count = 0
- global extrapolate_max_count = 0
- global control_mode = MODE_UNINITIALIZED
- global trajectory_points_left = 0
- 
- def set_servo_setpoint(q):
-   cmd_servo_state = SERVO_RUNNING
-   cmd_servo_q_last = cmd_servo_q
-   cmd_servo_q = q
- end
- 
- def extrapolate():
-   diff = [cmd_servo_q[0] - cmd_servo_q_last[0], cmd_servo_q[1] - cmd_servo_q_last[1], cmd_servo_q[2] - cmd_servo_q_last[2], cmd_servo_q[3] - cmd_servo_q_last[3], cmd_servo_q[4] - cmd_servo_q_last[4], cmd_servo_q[5] - cmd_servo_q_last[5]]
-   cmd_servo_q_last = cmd_servo_q
-   cmd_servo_q = [cmd_servo_q[0] + diff[0], cmd_servo_q[1] + diff[1], cmd_servo_q[2] + diff[2], cmd_servo_q[3] + diff[3], cmd_servo_q[4] + diff[4], cmd_servo_q[5] + diff[5]]
- 
-   return cmd_servo_q
- end
- 
- thread servoThread():
-   textmsg("ExternalControl: Starting servo thread")
-   state = SERVO_IDLE
-   while control_mode == MODE_SERVOJ:
-     enter_critical
-     q = cmd_servo_q
-     do_extrapolate = False
-     if (cmd_servo_state == SERVO_IDLE):
-       do_extrapolate = True
-     end
-     state = cmd_servo_state
-     if cmd_servo_state > SERVO_UNINITIALIZED:
-       cmd_servo_state = SERVO_IDLE
-     end
- 
-     if do_extrapolate:
-       extrapolate_count = extrapolate_count + 1
-       if extrapolate_count > extrapolate_max_count:
-         extrapolate_max_count = extrapolate_count
-       end
- 
-       q = extrapolate()
-       servoj(q, t=steptime, lookahead_time=0.03, gain=2000)
- 
-     elif state == SERVO_RUNNING:
-       extrapolate_count = 0
-       servoj(q, t=steptime, lookahead_time=0.03, gain=2000)
-     else:
-       extrapolate_count = 0
-       sync()
-     end
-     exit_critical
-   end
-   textmsg("ExternalControl: servo thread ended")
-   stopj(4.0)
- end
- 
- # Helpers for speed control
- def set_speed(qd):
-   cmd_servo_qd = qd
-   control_mode = MODE_SPEEDJ
- end
- 
- thread speedThread():
-   textmsg("ExternalControl: Starting speed thread")
-   while control_mode == MODE_SPEEDJ:
-     qd = cmd_servo_qd
-     speedj(qd, 40.0, steptime)
-   end
-   textmsg("ExternalControl: speedj thread ended")
-   stopj(5.0)
- end
- 
- thread jointTrajectoryThread():
-   textmsg("Executing trajectory. Number of points: ", trajectory_points_left)
-   while trajectory_points_left > 0:
-     enter_critical
-     #reading trajectory point + blend radius + type of point (cartesian/joint based)
-     raw_point = socket_read_binary_integer(TRAJECTORY_DATA_DIMENSION+1+1, "trajectory_socket")
-     trajectory_points_left = trajectory_points_left - 1
-     exit_critical
-     if raw_point[0] > 0:
-       q = [ raw_point[1] / MULT_jointstate, raw_point[2] / MULT_jointstate, raw_point[3] / MULT_jointstate, raw_point[4] / MULT_jointstate, raw_point[5] / MULT_jointstate, raw_point[6] / MULT_jointstate]
-       tmptime = raw_point[7] / MULT_time
-       blend_radius = raw_point[8] / MULT_time
- 
-       if trajectory_points_left > 0:
-         if raw_point[9] == TRAJECTORY_POINT_JOINT:
-           # textmsg("Executing movej with blending")
-           movej(q, t=tmptime, r=blend_radius)
-         elif raw_point[9] == TRAJECTORY_POINT_CARTESIAN:
-           # textmsg("Executing movel with blending")
-           movel(p[q[0], q[1], q[2], q[3], q[4], q[5]], t=tmptime, r=blend_radius)
-         end
-       else:
-         if raw_point[9] == TRAJECTORY_POINT_JOINT:
-           # textmsg("Executing movej without blending")
-           movej(q, t=tmptime, r=0.0)
-         elif raw_point[9] == TRAJECTORY_POINT_CARTESIAN:
-           # textmsg("Executing movel without blending")
-           movel(p[q[0], q[1], q[2], q[3], q[4], q[5]], t=tmptime, r=0.0)
-         end
-       end
-     end
-   end
-   socket_send_int(TRAJECTORY_RESULT_SUCCESS, "trajectory_socket")
-   textmsg("Trajectory finished")
- end
- 
- def clear_remaining_trajectory_points():
-   while trajectory_points_left > 0:
-     raw_point = socket_read_binary_integer(TRAJECTORY_DATA_DIMENSION+2, "trajectory_socket")
-     trajectory_points_left = trajectory_points_left - 1
-   end
- end
- 
- # Helpers for speed control
- def set_speedl(twist):
-   cmd_twist = twist
-   control_mode = MODE_SPEEDL
- end
- 
- thread speedlThread():
-   textmsg("Starting speedl thread")
-   while control_mode == MODE_SPEEDL:
-     twist = cmd_twist
-     speedl(twist, 40.0, steptime)
-   end
-   textmsg("speedl thread ended")
-   stopj(5.0)
- end
- 
- thread servoThreadP():
-   textmsg("Starting pose servo thread")
-   state = SERVO_IDLE
-   while control_mode == MODE_POSE:
-     enter_critical
-     q = cmd_servo_q
-     do_extrapolate = False
-     if (cmd_servo_state == SERVO_IDLE):
-       do_extrapolate = True
-     end
-     state = cmd_servo_state
-     if cmd_servo_state > SERVO_UNINITIALIZED:
-       cmd_servo_state = SERVO_IDLE
-     end
- 
-     if do_extrapolate:
-       extrapolate_count = extrapolate_count + 1
-       if extrapolate_count > extrapolate_max_count:
-         extrapolate_max_count = extrapolate_count
-       end
- 
-       q = extrapolate()
-       servoj(q, t=steptime, lookahead_time=0.03, gain=2000)
- 
-     elif state == SERVO_RUNNING:
-       extrapolate_count = 0
-       servoj(q, t=steptime, lookahead_time=0.03, gain=2000)
-     else:
-       extrapolate_count = 0
-       sync()
-     end
-     exit_critical
-   end
-   textmsg("pose servo thread ended")
-   stopj(4.0)
- end
- 
- def set_servo_pose(pose):
-   cmd_servo_state = SERVO_RUNNING
-   cmd_servo_q_last = cmd_servo_q
-   cmd_servo_q = get_inverse_kin(pose, cmd_servo_q)
- end
- 
- # Thread to receive script commands
- thread script_commands():
-   while control_mode > MODE_STOPPED:
-     raw_command = socket_read_binary_integer(SCRIPT_COMMAND_DATA_DIMENSION, "script_command_socket", 0)
-     if raw_command[0] > 0:
-       command = raw_command[1]
-       if command == ZERO_FTSENSOR:
-         zero_ftsensor()
-       elif command == SET_PAYLOAD:
-         mass = raw_command[2] / MULT_jointstate
-         cog = [raw_command[3] / MULT_jointstate, raw_command[4] / MULT_jointstate, raw_command[5] / MULT_jointstate]
-         set_payload(mass, cog)
-       elif command == SET_TOOL_VOLTAGE:
-         tool_voltage = raw_command[2] / MULT_jointstate
-         set_tool_voltage(tool_voltage)
-       end
-     end
-   end
- end
- 
- 
- # HEADER_END
- 
- # NODE_CONTROL_LOOP_BEGINS
- 
- socket_open("10.15.20.3", 50001, "reverse_socket")
- socket_open("10.15.20.3", 50003, "trajectory_socket")
- socket_open("10.15.20.3", 50004, "script_command_socket")
- 
- control_mode = MODE_UNINITIALIZED
- thread_move = 0
- thread_trajectory = 0
- trajectory_points_left = 0
- global keepalive = -2
- params_mult = socket_read_binary_integer(1+6+1, "reverse_socket", 0)
- textmsg("ExternalControl: External control active")
- keepalive = params_mult[1]
- thread_script_commands = run script_commands()
- while keepalive > 0 and control_mode > MODE_STOPPED:
-   enter_critical
-   params_mult = socket_read_binary_integer(1+6+1, "reverse_socket", 0.02) # steptime could work as well, but does not work in simulation
-   if params_mult[0] > 0:
-     keepalive = params_mult[1]
-     if control_mode != params_mult[8]:
-       if control_mode == MODE_FORWARD:
-         kill thread_trajectory
-         clear_remaining_trajectory_points()
-       end
-       control_mode = params_mult[8]
-       join thread_move
-       if control_mode == MODE_SERVOJ:
-         thread_move = run servoThread()
-       elif control_mode == MODE_SPEEDJ:
-         thread_move = run speedThread()
-       elif control_mode == MODE_FORWARD:
-         kill thread_move
-       elif control_mode == MODE_SPEEDL:
-         thread_move = run speedlThread()
-       elif control_mode == MODE_POSE:
-         thread_move = run servoThreadP()
-       end
-     end
-     if control_mode == MODE_SERVOJ:
-       q = [params_mult[2] / MULT_jointstate, params_mult[3] / MULT_jointstate, params_mult[4] / MULT_jointstate, params_mult[5] / MULT_jointstate, params_mult[6] / MULT_jointstate, params_mult[7] / MULT_jointstate]
-       set_servo_setpoint(q)
-     elif control_mode == MODE_SPEEDJ:
-       qd = [params_mult[2] / MULT_jointstate, params_mult[3] / MULT_jointstate, params_mult[4] / MULT_jointstate, params_mult[5] / MULT_jointstate, params_mult[6] / MULT_jointstate, params_mult[7] / MULT_jointstate]
-       set_speed(qd)
-     elif control_mode == MODE_FORWARD:
-       if params_mult[2] == TRAJECTORY_MODE_RECEIVE:
-         kill thread_trajectory
-         clear_remaining_trajectory_points()
-         trajectory_points_left = params_mult[3]
-         thread_trajectory = run jointTrajectoryThread()
-       elif params_mult[2] == TRAJECTORY_MODE_CANCEL:
-         textmsg("cancel received")
-         kill thread_trajectory
-         clear_remaining_trajectory_points()
-         socket_send_int(TRAJECTORY_RESULT_CANCELED, "trajectory_socket")
-       end
-     elif control_mode == MODE_SPEEDL:
-       twist = [params_mult[2] / MULT_jointstate, params_mult[3] / MULT_jointstate, params_mult[4] / MULT_jointstate, params_mult[5] / MULT_jointstate, params_mult[6] / MULT_jointstate, params_mult[7] / MULT_jointstate]
-       set_speedl(twist)
-     elif control_mode == MODE_POSE:
-       pose = p[params_mult[2] / MULT_jointstate, params_mult[3] / MULT_jointstate, params_mult[4] / MULT_jointstate, params_mult[5] / MULT_jointstate, params_mult[6] / MULT_jointstate, params_mult[7] / MULT_jointstate]
-       set_servo_pose(pose)
-     end
-   else:
-     keepalive = keepalive - 1
-   end
-   exit_critical
- end
- 
- textmsg("ExternalControl: Stopping communication and control")
- control_mode = MODE_STOPPED
- join thread_move
- join thread_trajectory
- kill thread_script_commands
- join thread_script_commands
- textmsg("ExternalControl: All threads ended")
- socket_close("reverse_socket")
- socket_close("trajectory_socket")
- socket_close("script_command_socket")
- 
- # NODE_CONTROL_LOOP_ENDS
-    # end: URCap Program Node
+    $ 3 "Control by User Computer (Panther)"
+popup("The connection to the remote PC at 10.15.20.3:50002 could not be established. Reason: connect timed out","Receive program failed", False, True, blocking=True)
+sync()    # end: URCap Program Node
   end
 end

@@ -1,10 +1,8 @@
  Program
+   Variables Setup
    Robot Program
-     Control by 10.15.20.3
+     Control by User Computer (Panther)
    Thread_1
-     Wait: 0.2
-     Set AO[1]=get_rg_Width()/101.5
+     Script: husarion_rg2_driver.script
    Thread_2
-     Wait digital_out[0]≟ True 
-     rg_grip((get_standard_analog_out(0)-0.0035)*6060, 40, tool_index = 0, blocking = True, depth_comp = False, popupmsg = True)
-     Set DO[0]=Off
+     Script: husarion_rg2_watchdog.script
